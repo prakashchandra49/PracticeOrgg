@@ -10,5 +10,6 @@ public with sharing class AccController {
                 options.add(new selectoption(c.id,c.name));
             }
                 return options;
+                system.debug('prkash');
 }
 }
