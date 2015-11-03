@@ -1,0 +1,25 @@
+<apex:page standardController="Job_Application__c"
+recordSetVar="jobApplications">
+<apex:form >
+<apex:sectionHeader title="Change status for Job Applicants"/>
+<apex:pageBlock mode="edit">
+<apex:pageMessages />
+<apex:pageblockSection title="Change">
+<apex:inputField value="{!Job_Application__c.Status__c}"/>
+</apex:pageBlockSection>
+<apex:pageBlockSection title="Selected Job Applicants">
+<apex:pageBlockTable value="{!selected}" var="j">
+<apex:column value="{!j.Candidate__r.First_Name__c}">
+</apex:column>
+<apex:column value="{!j.Candidate__r.Last_Name__c}">
+</apex:column>
+<apex:column value="{!j.Status__c}"/>
+</apex:pageBlockTable>
+</apex:pageblockSection>
+<apex:pageBlockButtons location="bottom">
+<apex:commandButton value="Save" action="{!save}"/>
+<apex:commandButton value="Cancel" action="{!cancel}"/>
+</apex:pageBlockButtons>
+</apex:pageBlock>
+</apex:form>
+</apex:page>

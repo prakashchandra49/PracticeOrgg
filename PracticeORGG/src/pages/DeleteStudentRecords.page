@@ -1,0 +1,51 @@
+<apex:page controller="DeleteStudentController">
+<script src = "/soap/ajax/11.0/connection.js"></script>
+    <script src = "/soap/ajax/11.0/apex.js"></script>
+<center>
+  <apex:form >
+      <apex:dataTable value="{!Records}" var="rec" border="1" cellpadding="10">
+
+      <apex:column >
+          <apex:facet name="header">Student Id</apex:facet>
+          <apex:outputText value="{!rec.Id}"/>
+      </apex:column>
+
+     <apex:column >
+        <apex:facet name="header">Student FirstName</apex:facet>
+        <apex:outputText value="{!rec.FirstName__c}"/>
+    </apex:column>
+
+    <apex:column >
+        <apex:facet name="header">Student LastName</apex:facet>
+        <apex:outputText value="{!rec.LastName__c}"/>
+    </apex:column>
+
+</apex:dataTable> 
+    <br/><br/>
+    <apex:commandButton value="Continue" onclick="deleteRecords()"/>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <apex:commandButton value="Cancel" onclick="goToPreviousPage()"/> 
+  </apex:form>
+  </center>
+  <script type="text/javascript">
+      sforce.connection.sessionId = '{!$Api.Session_ID}';
+      var url = '{!$CurrentPage.parameters.pageURL}';
+      function deleteRecords()
+      {
+          var studentIds = '{!$CurrentPage.parameters.selectedIds}';
+          var studentList = studentIds.split(",");
+          var delResult = sforce.connection.deleteIds([studentList]);
+          parent.window.close();
+          parent.window.opener.location.href =url;
+          self.close();
+      }
+      
+      function goToPreviousPage()
+      {
+          parent.window.close();
+          parent.window.opener.location.href = url;
+       // window.open(url);
+      //  parent.window.close();
+      }
+  </script>
+</apex:page>

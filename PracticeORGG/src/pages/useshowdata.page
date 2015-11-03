@@ -1,0 +1,5 @@
+<apex:page standardController="Student__c">
+<apex:form >
+ <c:showdata ></c:showdata>
+ </apex:form>
+</apex:page>

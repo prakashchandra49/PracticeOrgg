@@ -1,0 +1,4 @@
+<apex:page standardController="Student__c">
+  
+  <script>window.location.assign("https://c.ap1.visual.force.com/apex/class_1?retURL=%2Fa01%2Fo&save_new=1&sfdc.override=1");  </script>
+</apex:page>

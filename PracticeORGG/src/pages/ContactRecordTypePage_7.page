@@ -1,0 +1,13 @@
+<!--Question 7 :-  Create 2 recordtypes (TGT and PGT) in Teacher (Contact) table and on detail page show bar as a Header containing
+                   “Record Type Value” in a bar. See snapshot on next slide. -->
+<apex:page standardController="contact">
+<apex:pageBlock mode="detail">
+<table width="100%" bgcolor="pink" align="center">
+<tr>
+<td align="center">{!contact.recordType.name}</td>
+</tr>
+<apex:detail relatedList="false" />
+</table>
+</apex:pageBlock>
+
+</apex:page>

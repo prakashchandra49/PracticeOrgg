@@ -1,0 +1,55 @@
+<apex:page controller="MassEmailContactsController1">
+  <apex:form >
+   <apex:actionfunction name="JsaddToMap" action="{!addToMap}"  reRender="contactTable">
+    </apex:actionfunction>
+      <apex:pageBlock title="Contact Related To Account" id="pageBlock" >
+        <apex:pageMessages ></apex:pageMessages>
+         
+       <br/><br/>
+       <apex:repeat value="{!Albhabet}" var="alpha" id="theRepeat">&nbsp;&nbsp;
+        <apex:commandLink action="{!showContactAlphabet}" value="{!alpha}"  id="theValue" reRender="pageBlock" target="_blank">
+        <apex:param name="Alp" value="{!alpha}" assignTo="{!character}"/>     
+        </apex:commandLink>
+      </apex:repeat>
+        <apex:pageBlockTable value="{!lstcontactWrapper}" var="a"  id="contactTable">
+          
+          <apex:column >
+            <apex:facet name="header">
+            <apex:inputCheckbox value="{!selectAll}" ><apex:actionSupport event="onclick" action="{!checkAll}" rerender="contactTable"/></apex:inputCheckbox>
+            </apex:facet>
+            <apex:inputCheckbox value="{!a.isSelected}" onclick="JsaddToMap()">
+         
+            </apex:inputCheckbox>
+           </apex:column>
+          <apex:column >
+            <apex:facet name="header">
+              <apex:commandLink action="{!sortData}" reRender="pageBlock" value="Name">
+              <apex:variable var="imageVar" value="{!imageName}"/> 
+               <apex:image url="{!URLFOR($Resource.Arrows, imageVar)}" height="8" width="8" rendered="{!nameSorting}" />
+              <apex:param id="columnn" name="columnn" value="Name" assignTo="{!sortingElement}"/>
+              </apex:commandLink>
+            </apex:facet>
+          <apex:outputLink value="/{!a.cont.Id}" target="_blank">{!a.cont.Name}</apex:outputLink>
+          </apex:column>
+          <apex:column value="{!a.cont.Email}">
+             <apex:facet name="header">
+              <apex:commandLink action="{!sortData}" reRender="pageBlock" value="Email">
+              <apex:variable var="imageVar" value="{!imageName}"/> 
+               <apex:image url="{!URLFOR($Resource.Arrows, imageVar)}" height="8" width="8" rendered="{!emailSorting}" />
+              <apex:param name="columnn" value="Email" assignTo="{!sortingElement}"/>
+              </apex:commandLink>
+            </apex:facet>
+          </apex:column>
+          <apex:column value="{!a.cont.Phone}"></apex:column>
+          <apex:column value="{!a.cont.Account.Name}"></apex:column>
+          <apex:column value="{!a.cont.Fax}"></apex:column>
+        </apex:pageBlockTable>
+        <apex:pageBlockButtons >
+          <apex:commandLink action="{!next}" value="next" reRender="contactTable"/>
+          <apex:commandLink action="{!previous}" value="previous" reRender="contactTable"/>
+        </apex:pageBlockButtons>
+        
+      </apex:pageBlock>
+
+    </apex:form>
+</apex:page>

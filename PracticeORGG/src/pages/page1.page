@@ -1,0 +1,7 @@
+<apex:page standardController="Account">
+<apex:pageBlock title="My page block" mode="">
+dcfdcf
+<apex:facet name="aaaa">dfdsgfdgfdgfd</apex:facet>
+</apex:pageBlock>
+
+</apex:page>

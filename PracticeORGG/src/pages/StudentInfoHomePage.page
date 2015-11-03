@@ -1,0 +1,24 @@
+<apex:page Controller="ConStudent">
+    <apex:form >
+       <apex:pageBlock title="Welcome Student">
+           <apex:pageBlockSection >
+               <apex:selectList size="1" value="{!selectedStudent}">
+                    <apex:actionSupport event="onchange"  action="{!viewStudent}" reRender="stdBlock"/>
+                    <apex:selectOptions value="{!Stduents}"></apex:selectOptions>
+               </apex:selectList>
+           </apex:pageBlockSection>
+           
+     
+           <apex:pageBlockSection id="stdBlock">
+              <apex:pageblocktable value="{!SingleStudent}" var="std" rendered="{!NOT(ISNULL(SingleStudent))}" >
+                  <apex:column value="{!std.FirstName__c}"/>
+                  <apex:column value="{!std.LastName__c}"/>
+                  <apex:column value="{!std.Age__c}"/>
+                  <apex:column value="{!std.ClassSt__c}"/>
+                   <apex:column value="{!std.EmailID__c}"/>
+              </apex:pageblocktable>
+           </apex:pageBlockSection>
+       </Apex:pageBlock>
+    </apex:form>
+
+</apex:page>

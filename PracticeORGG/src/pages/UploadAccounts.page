@@ -1,0 +1,24 @@
+<apex:page sidebar="false" controller="FileUploader">
+   <apex:form >
+      <apex:sectionHeader title="Upload data from CSV file"/>
+      <apex:pagemessages />
+      <apex:pageBlock >
+             <center>
+              <apex:inputFile value="{!contentFile}" filename="{!nameFile}" /> <apex:commandButton action="{!ReadFile}" value="Upload File" id="theButton" style="width:70px;"/>
+              <br/> <br/> 
+             </center>  
+      
+      
+      <apex:pageblocktable value="{!uploadedContacts}" var="acc" rendered="{!NOT(ISNULL(uploadedContacts))}">
+          <apex:column headerValue="Contact LastName">
+              <apex:outputField value="{!acc.LastName}"/>
+          </apex:column>
+          <apex:column headerValue="Shipping Firstname">
+              <apex:outputField value="{!acc.Firstname}"/>
+          </apex:column>
+    
+      </apex:pageblocktable> 
+      
+      </apex:pageBlock>       
+   </apex:form>   
+</apex:page>

@@ -1,0 +1,16 @@
+div.note
+{
+background-color:#6495ed;
+font-weight:bold;
+height:20px;
+padding-top:10px;
+//padding-left:10px;
+color:white;
+//font-size:15px;
+}
+.txtalign
+{
+font-weight:bold;
+float:right;
+padding-right:30px;
+}

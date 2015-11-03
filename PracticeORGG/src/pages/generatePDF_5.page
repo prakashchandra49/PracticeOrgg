@@ -1,0 +1,25 @@
+<apex:page standardController="Student__c"  extensions="PdfGeneratorControllerForStudent">
+   <apex:form >
+    <apex:pageBlock title="PDF Input">
+ 
+      <apex:pageBlockButtons >
+        <apex:commandButton action="{!generatePDF}" value="Generate PDF"/>
+        
+      </apex:pageBlockButtons>
+      <apex:pageMessages />
+ 
+      <apex:pageBlockSection >
+ 
+        <apex:pageBlockSectionItem >
+            <apex:outputLabel value="File Name" for="pdfName"/>
+          <apex:inputText value="{!pdfName}" id="pdfName"/>
+        </apex:pageBlockSectionItem>
+ 
+      
+
+      </apex:pageBlockSection>
+ 
+    </apex:pageBlock>
+  </apex:form>
+ 
+</apex:page>

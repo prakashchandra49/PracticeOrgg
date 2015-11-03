@@ -1,0 +1,50 @@
+<apex:page standardController="class__c" showHeader="false" sidebar="false">
+<script src="/soap/ajax/11.0/connection.js"></script>
+<script src="/soap/ajax/11.0/apex.js"></script>
+    <br/><br/>
+      <apex:form id="form1" onsubmit="saveNewStudentRecord()">
+          <center>
+              <apex:outputLabel value="Student Name : "></apex:outputLabel>
+              <apex:inputText id="studentName"/>
+              <br/><br/>
+
+              <apex:outputLabel value="Student's Last Name : "></apex:outputLabel>
+              <apex:inputText id="lastName"/>
+              <br/><br/>
+
+              <apex:commandButton value="Add New Student Record"/>
+          </center>
+      </apex:form>
+      <script type="text/javascript">
+          function saveNewStudentRecord()
+          {    
+              var st = new sforce.SObject("Student__c");
+              var sName = document.getElementById("{!$Component.form1.studentName}").value;
+              var lName = document.getElementById("{!$Component.form1.lastName}").value;
+              var classId = "{!$CurrentPage.parameters.id}";
+              sforce.connection.sessionId = '{!$Api.Session_ID}';
+              st.Name = sName;
+              st.LastName__c = lName;
+              st.ClassSt__c = classId;
+
+              var result = sforce.connection.create([st],{onSuccess : success, onFailure : failed});
+              alert('hiiiiiiiiiiii'); 
+          }
+          function success(result) 
+          { 
+              try{
+             if (result[0].getBoolean("success")) 
+               alert("New student record created with id " + result[0].id);
+             else
+               alert("failed to create student record " + result[0]);
+               }catch(e){
+               alert(e);
+               }
+          }
+             
+          function failed(error) 
+          { 
+                alert("Error while creating student record :" + error);
+          }
+      </script>
+</apex:page>

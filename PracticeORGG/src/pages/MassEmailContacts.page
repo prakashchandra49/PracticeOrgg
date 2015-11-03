@@ -1,0 +1,47 @@
+<apex:page controller="MassEmailContactsController" tabStyle="Contact">
+<apex:stylesheet value="{!$Resource.style}"/>
+
+  <apex:sectionHeader title="Mass Email" subtitle="Recipient Selection" ></apex:sectionHeader>
+    <apex:form >
+      <div class="note">Step 1. Specify the recipients to include    <h1 class="txtalign">Step 1 of 4</h1></div>
+      <apex:pageBlock title="FilterSection" helpTitle="Help" helpUrl="http://www.google.com" >
+    
+            <apex:outputLabel value="Account"></apex:outputLabel>
+            <apex:inputText value="{!accountName}" label="Account"/>
+            <apex:commandButton value="Filter" action="{!ViewData}" id="theButton" rerender="pageBlock,ren"></apex:commandButton>
+        </apex:pageBlock>
+      <apex:outputPanel id="ren" style="display:{!IF(NOT(ISNULL(Contacts)),'block','none')}">  
+      <apex:pageBlock title="Contact Related To Account" id="pageBlock" >
+        
+       
+        <apex:pageMessages ></apex:pageMessages>
+         
+       <br/><br/>
+        <apex:pageBlockTable value="{!lstcontactWrapper}" var="a" rendered="{!NOT(ISNULL(lstcontactWrapper))}" id="contactTable">
+          
+          <apex:column >
+            <apex:facet name="header">
+            <apex:inputCheckbox value="{!selectAll}" ><apex:actionSupport event="onclick" action="{!checkAll}" rerender="contactTable"/></apex:inputCheckbox>
+            </apex:facet>
+            <apex:inputCheckbox value="{!a.isSelected}">
+              <apex:actionSupport event="onclick" action="{!unCheck}" rerender="contactTable"/>
+            </apex:inputCheckbox>
+           </apex:column>
+          <apex:column >
+            <apex:facet name="header">Contact Name</apex:facet>
+          <apex:outputLink value="/{!a.cont.Id}" target="_blank">{!a.cont.Name}</apex:outputLink>
+          </apex:column>
+          <apex:column value="{!a.cont.Email}"></apex:column>
+          <apex:column value="{!a.cont.Phone}"></apex:column>
+          <apex:column value="{!a.cont.Account.Name}"></apex:column>
+          <apex:column value="{!a.cont.Fax}"></apex:column>
+        </apex:pageBlockTable>
+        <apex:pageBlockButtons >
+          <apex:commandButton value="Next" action="{!SelectTeamplate}" > </apex:commandButton>
+          <apex:commandLink value="Cancel" action="{!Cancel}"> </apex:commandLink>
+        </apex:pageBlockButtons>
+        
+      </apex:pageBlock>
+      </apex:outputPanel>
+    </apex:form>
+</apex:page>

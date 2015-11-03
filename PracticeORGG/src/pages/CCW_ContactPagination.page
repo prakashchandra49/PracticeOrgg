@@ -1,0 +1,89 @@
+<!--
+Copyright (c) 2013 CloudClickware
+ 
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software 
+and associated documentation files (the "Software"), to deal in the Software without restriction, 
+including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, 
+and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, 
+subject to the following conditions:
+ 
+The above copyright notice and this permission notice shall be included in all copies or substantial 
+portions of the Software.
+ 
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, 
+INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE 
+AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, 
+DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT 
+OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+-->
+ 
+<apex:page controller="CCW_ContactPaginationController">
+  
+    <script type="text/javascript">
+        
+        /*
+        *    function to handle checkbox selection
+        */
+        function doCheckboxChange(cb,itemId){
+         
+            if(cb.checked==true){
+                aSelectItem(itemId);
+            }
+            else{
+                aDeselectItem(itemId);
+            }
+            
+        }
+ 
+    </script>
+    
+    
+    <apex:form >
+        
+        <!-- handle selected item -->
+        <apex:actionFunction name="aSelectItem" action="{!doSelectItem}" rerender="mpb">
+            <apex:param name="contextItem" value="" assignTo="{!contextItem}"/>
+        </apex:actionFunction>
+        
+        <!-- handle deselected item -->
+        <apex:actionFunction name="aDeselectItem" action="{!doDeselectItem}" rerender="mpb">
+            <apex:param name="contextItem" value="" assignTo="{!contextItem}"/>
+        </apex:actionFunction>
+        
+        
+        
+        <apex:pageBlock title="CloudClickware Pagination Sample" id="mpb">
+            
+            <!-- table of data -->
+            <apex:pageBlockTable title="Contacts" value="{!contacts}" var="c">
+                <apex:column >
+                    <apex:facet name="header">Action</apex:facet>
+                    <apex:inputCheckbox value="{!c.IsSelected}" />                   
+                </apex:column>
+                <apex:column value="{!c.tContact.FirstName}"/>
+                <apex:column value="{!c.tContact.LastName}"/>
+                <apex:column value="{!c.tContact.Title}"/>
+                <apex:column value="{!c.tContact.Phone}"/>
+                <apex:column value="{!c.tContact.Email}"/>
+            </apex:pageBlockTable>
+        
+            <!-- count of selected items -->
+            <apex:outputLabel value="[{!selectedCount} records selected]" />
+            
+            <br/>
+            
+            <!-- next, previous and page info -->
+            <apex:commandLink action="{!doPrevious}" rendered="{!hasPrevious}" value="Previous" />
+            <apex:outputLabel rendered="{!NOT(hasPrevious)}" value="Previous" />
+            
+            <apex:outputLabel value=" (page {!pageNumber} of {!totalPages}) " />
+            
+            <apex:commandLink action="{!doNext}" rendered="{!hasNext}" value="Next" />
+            <apex:outputLabel rendered="{!NOT(hasNext)}" value="Next" />
+        
+        </apex:pageBlock> 
+        
+    </apex:form>
+ 
+ 
+</apex:page>

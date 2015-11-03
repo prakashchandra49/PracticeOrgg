@@ -1,0 +1,43 @@
+<apex:page standardController="Opportunity" extensions="opprtunity_product_Extension" sidebar="false">
+  
+<apex:form >
+  <apex:pageBlock >
+    <apex:pageBlockSection columns="1">
+      <apex:pageBlockTable value="{!listprpr}" var="prpr" id="table1" style="width:750px">
+       <apex:column >
+         <apex:facet name="header">Opportunity</apex:facet>
+           <apex:commandLink value="{!prpr.opprtunityName}" action="{!showDetailPage}" reRender="detailPage,table1" >
+           <apex:param name="firstParam" assignTo="{!oppid}" value="{!prpr.opprtunity}" />
+           </apex:commandLink>
+         </apex:column> 
+        <apex:column >
+          <apex:facet name="header">product</apex:facet>
+           <apex:commandLink value="{!prpr.productName}" action="{!productDetail}" reRender="detailPage,table1" >
+           <apex:param name="firstParam" assignTo="{!productid}" value="{!prpr.product}" />
+           </apex:commandLink>
+          
+        </apex:column>
+        <apex:column >
+           <apex:commandLink value="Price" action="{!PriceBookEntryDetail}" reRender="detailPage,table1" >
+           <apex:param name="firstParam" assignTo="{!priceid}" value="{!prpr.Price}" />
+           </apex:commandLink>
+         
+          <apex:facet name="header">PriceBookEntry</apex:facet>
+{!showDetail}
+        </apex:column>
+      </apex:pageBlockTable>
+    </apex:pageBlockSection>
+  <apex:pageBlockSection id="detailPage" title="DetailPage" columns="1">
+      
+       <apex:detail subject="{!oppId}"  relatedList="false" rendered="{!isOppRendered}" />
+
+
+       <apex:detail subject="{!productid}"  relatedList="false" rendered="{!isProductRendered}" />
+   
+      
+       <apex:detail subject="{!priceid}"  relatedList="false" rendered="{!isPriceRendered}" />
+           
+  </apex:pageBlockSection>
+</apex:pageBlock>
+</apex:form>
+</apex:page>

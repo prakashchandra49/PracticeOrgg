@@ -1,0 +1,72 @@
+<apex:page title="Product Selection" tabStyle="opportunity" controller="productselectionController">
+<style type="text/css">
+.center
+{
+margin:auto;
+width:70%;
+padding:10px 0px 0px 300px;
+}
+
+.panelclass
+{
+          
+
+}
+</style>
+ <apex:sectionHeader title="Opportunity dynamic value" subtitle="Product Selection" ></apex:sectionHeader>
+ Enter your keyword and filter criteria, then click Search to begin your search. Click More filters to use more than 
+ one filter. Search results include all records that match both your keyword and filter entries.
+<apex:form >
+  <apex:actionfunction name="JsaddToMap" action="{!addToMap}"  reRender="productTable">
+    </apex:actionfunction>
+  <div class="center">
+    <apex:commandButton value="select" action="{!addProduct}"> </apex:commandButton>&nbsp;
+    <apex:commandButton value="Cancel" > </apex:commandButton><br/><br/>
+  </div>
+  
+  <apex:pageBlock id="productBlock">
+    <apex:outputPanel styleClass="panelclass">
+      <table>
+        <tr>
+         <td><apex:outputlabel >By Keyword</apex:outputlabel></td>
+         <td><apex:outputlabel >By Field Filter</apex:outputlabel></td>
+        </tr>
+        <tr>
+         <td> <apex:inputtext /></td>
+         <td> <apex:inputtext /></td>
+          <td> <apex:inputtext /></td>
+         <td> <apex:inputtext /></td>
+        </tr>
+        <tr>
+         <td><apex:commandButton value="Search" > </apex:commandButton></td>
+        
+        </tr>
+      </table>
+     
+     
+    </apex:outputPanel><br/>
+    
+    <apex:pageBlockTable value="{!lstProductWrapper}" var="prd" id="productTable">
+    <apex:column >
+      <apex:inputCheckbox value="{!prd.isSelected}" onclick="JsaddToMap()">
+      </apex:inputCheckbox>
+       </apex:column>
+      <apex:column value="{!prd.product.Name}"/>
+      <apex:column value="{!prd.product.ProductCode}"/>
+      <apex:column value="{!prd.product.PricebookEntries[0].UnitPrice}"/>
+      <apex:column value="{!prd.product.Description}"/>
+      <apex:column value="{!prd.product.Family}"/>
+    </apex:pageBlockTable>
+    <apex:pageBlockButtons >
+          <apex:commandLink action="{!next}" value="next" reRender="productBlock" rendered="{!hasNext}"/>&nbsp;
+          <apex:commandLink action="{!previous}" value="previous" reRender="productBlock" rendered="{!hasPrevious}"/>
+        </apex:pageBlockButtons>
+  </apex:pageBlock>
+  
+  
+  <div class="center">
+    <apex:commandButton value="Select" > </apex:commandButton>&nbsp;
+    <apex:commandButton value="Cancel" > </apex:commandButton>
+  </div>
+</apex:form> 
+</apex:page>

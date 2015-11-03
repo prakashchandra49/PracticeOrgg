@@ -1,0 +1,38 @@
+<apex:page StandardController="PositionS__c" id="thePage" >
+<apex:stylesheet value="{!$Resource.CandidateStyleSheet}"></apex:stylesheet>
+<apex:form >
+<apex:pageblock >
+<apex:pageMessages ></apex:pageMessages>
+
+<apex:pageblockSection columns="4">
+ <apex:inputField value="{!PositionS__c.Status__c}" />
+  <apex:inputField value="{!PositionS__c.Job_Description__c}"  style="width:300px"/>      
+</apex:pageblockSection>
+<apex:pageBlockButtons >
+ <apex:commandButton action="{!Save}" value="Save" />
+ <apex:commandButton action="{!cancel}" value="Cancel"/> 
+</apex:pageBlockButtons>
+</apex:pageblock>
+<apex:pageblock >
+<apex:outputText value="These are the candidates for the
+position." styleclass="candidate"/>
+<apex:pageBlockSection >
+  <apex:pageBlocktable value="{!PositionS__c.Job_ApplicationS__r}" var="JA" title="Job Applications" >
+ <apex:column headerValue="Candidate">
+<apex:commandLink value="{!JA.CandidateS__r.First_Name__c}
+{!JA.CandidateS__r.Last_Name__c}" rerender="thePage:candidateDetail" status="status">
+<apex:param name="candidate" value="{!JA.CandidateS__r.ID}" />
+</apex:commandLink>
+</apex:column>      
+  </apex:pageBlocktable> 
+</apex:pageBlockSection>
+</apex:pageblock>
+ <apex:actionstatus id="status" startText="Fetching Candidate Data....." StopText=""></apex:actionstatus>
+</apex:form>
+
+<apex:outputPanel id="candidateDetail">
+<apex:detail subject="{!$CurrentPage.parameters.candidate}" id="CandidatDetailPage"
+title="false"></apex:detail>
+
+</apex:outputPanel>
+</apex:page>

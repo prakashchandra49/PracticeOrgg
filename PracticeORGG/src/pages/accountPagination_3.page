@@ -1,0 +1,38 @@
+<apex:page standardController="Account" recordSetvar="accounts" extensions="AccountPagination"> 
+<apex:form >
+    <apex:pageBlock title="Select Account Details">
+        <apex:pageBlockSection >
+            <p>Select Country :</p>
+                <apex:selectList size="1" value="{!selectedCountry}">
+                    <apex:selectOptions value="{!countries}"></apex:selectOptions>
+                </apex:selectList>
+                 <p align='Left'>Enter BillingState:</p>
+                 <apex:selectList id="stateBilling" size="1" value="{!selectedState}">
+                     <apex:selectOptions value="{!states}"></apex:selectOptions>
+                 </apex:selectList>
+                  <p align='Left'>Enter BillingCity:</p>
+                     <apex:selectList id="cityBilling" size="1" value="{!selectedCity}">
+                 <apex:selectOptions value="{!cities}"></apex:selectOptions>
+         </apex:selectList>
+        </apex:pageBlockSection>
+        <apex:pageBlockButtons >
+            <apex:commandButton value="Search" action="{!search}" reRender="searchResult"/>
+        </apex:pageBlockButtons>
+    </apex:pageBlock>
+    </apex:form>
+  <apex:pageBlock title="Viewing Accounts Results" id="searchResult">
+      <apex:form id="theForm">
+        <apex:pageBlockSection >
+          <apex:dataList var="count" value="{!accountPagination}" type="1">
+              {!count.name}
+          </apex:dataList>
+        </apex:pageBlockSection>
+        <apex:panelGrid columns="2">
+          <apex:commandLink action="{!previous}" rendered="{!hasPrevious}">Previous</apex:commandlink>
+          <apex:commandLink action="{!next}" rendered="{!hasNext}">Next</apex:commandlink>
+          <apex:commandLink action="{!first}">First</apex:commandlink>
+          <apex:commandLink action="{!last}">Last</apex:commandlink>
+        </apex:panelGrid>
+      </apex:form> 
+  </apex:pageBlock>
+</apex:page>

@@ -1,0 +1,92 @@
+<apex:component controller="showdataCon">
+  
+     <apex:pageBlock title="Viewing Student">
+     <apex:pageBlockSection title="Viewing Student" id="studentSection">
+     <apex:pageBlockTable value="{!student}" var="rc" id="studentTable">
+    
+     <apex:column value="{!rc.FirstName__c}" >
+              <apex:facet name="header">
+                  <apex:commandLink value="{!$ObjectType.Student__c.Fields.FirstName__c.Label}" reRender="studentTable">
+                      
+                           <apex:commandLink action="{!sortList}" value="<" reRender="studentTable">
+                                  <apex:param value="FirstName__c DESC" assignTo="{!sortType}" />
+                          </apex:commandLink>&nbsp;
+                          <apex:commandLink action="{!sortList}" value=">" reRender="studentTable">
+                                  <apex:param value="FirstName__c ASC" assignTo="{!sortType}" />
+                          </apex:commandLink>
+                  </apex:commandLink>
+              </apex:facet>
+        </apex:column>
+    
+<apex:column value="{!rc.LastName__c}" >
+              <apex:facet name="header">
+                  <apex:commandLink value="{!$ObjectType.Student__c.Fields.LastName__c.Label}" reRender="studentTable" >
+                      
+                           <apex:commandLink action="{!sortList}" value="<" reRender="studentTable">
+                                  <apex:param value="LastName__c DESC" assignTo="{!sortType}" />
+                          </apex:commandLink>&nbsp;
+                          <apex:commandLink action="{!sortList}" value=">" reRender="studentTable">
+                                  <apex:param value="LastName__c ASC" assignTo="{!sortType}" />
+                          </apex:commandLink>
+                  </apex:commandLink>
+              </apex:facet>
+        </apex:column>
+    <apex:column value="{!rc.WifeName__c}" >
+              <apex:facet name="header">
+                  <apex:commandLink value="{!$ObjectType.Student__c.Fields.WifeName__c.Label}" reRender="studentTable" >
+                     
+                           <apex:commandLink action="{!sortList}" value="<" reRender="studentTable">
+                                  <apex:param value="WifeName__c DESC" assignTo="{!sortType}" />
+                          </apex:commandLink>&nbsp;
+                          <apex:commandLink action="{!sortList}" value=">" reRender="studentTable">
+                                  <apex:param value="WifeName__c ASC" assignTo="{!sortType}" />
+                          </apex:commandLink>
+                  </apex:commandLink>
+              </apex:facet>
+        </apex:column>
+   
+<apex:column value="{!rc.DOB__c}" >
+              <apex:facet name="header">
+                  <apex:commandLink value="{!$ObjectType.Student__c.Fields.DOB__c.Label}" reRender="studentTable" >
+                    
+                           <apex:commandLink action="{!sortList}" value="<" reRender="studentTable">
+                                  <apex:param value="DOB__c DESC" assignTo="{!sortType}" />
+                          </apex:commandLink>&nbsp;
+                          <apex:commandLink action="{!sortList}" value=">" reRender="studentTable">
+                                  <apex:param value="DOB__c ASC" assignTo="{!sortType}" />
+                          </apex:commandLink>
+                  </apex:commandLink>
+              </apex:facet>
+        </apex:column>   
+   
+<apex:column value="{!rc.Age__c}" >
+              <apex:facet name="header">
+                  <apex:commandLink value="{!$ObjectType.Student__c.Fields.Age__c.Label}"  reRender="studentTable">
+                     
+                           <apex:commandLink action="{!sortList}" value="<" reRender="studentTable">
+                                  <apex:param value="Age__c DESC" assignTo="{!sortType}" />
+                          </apex:commandLink>&nbsp;
+                          <apex:commandLink action="{!sortList}" value=">" reRender="studentTable">
+                                  <apex:param value="Age__c ASC" assignTo="{!sortType}" />
+                          </apex:commandLink>
+                  </apex:commandLink>
+              </apex:facet>
+        </apex:column>   
+       
+ </apex:pageBlockTable>
+ </apex:pageBlockSection>
+ <apex:pageBlockSection id="linkSection">
+   <apex:panelGrid columns="4">
+          <apex:commandLink action="{!previous}" rendered="{!hasPrevious}" reRender="studentSection,linkSection">Previous</apex:commandlink>
+          <apex:commandLink action="{!next}" rendered="{!hasNext}" reRender="studentSection,linkSection" >Next</apex:commandlink>
+          <apex:commandLink action="{!first}" reRender="studentSection">First</apex:commandlink>
+          <apex:commandLink action="{!last}" reRender="studentSection">Last</apex:commandlink>
+        </apex:panelGrid>
+        
+   </apex:pageBlockSection>
+       <apex:pageBlockSection > 
+      <apex:inputText label="Enter Page Number : " size="50" value="{!pageNum}" id="txtPageNum" />
+       <apex:commandLink value="Quick Go" action="{!go}" reRender="studentSection" />
+      </apex:pageBlockSection>
+     </apex:pageBlock>
+</apex:component>

@@ -1,0 +1,12 @@
+<apex:page controller="MassEmailContactsController" tabStyle="Contact">
+<apex:stylesheet value="{!$Resource.style}"/>
+   
+   <apex:form >
+   <apex:sectionHeader title="Mass Email" subtitle="Complete"></apex:sectionHeader>
+     <div class="note">Step 4. Your emails have been submitted for processing.      <h1 class="txtalign">Step 4 of 4</h1></div>
+   <apex:pageBlock helpTitle="Help" helpUrl="http://www.google.com">
+     <apex:outputLabel >Congratulations! You have finished with the Mass Email wizard</apex:outputLabel> <br/>
+     <apex:commandLink value="Finish" action="{!Cancel}" style="float:right"> </apex:commandLink><br/>
+   </apex:pageBlock>
+   </apex:form>
+</apex:page>

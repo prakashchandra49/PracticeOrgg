@@ -1,0 +1,18 @@
+<apex:page controller="Wizard_3a_Controller">
+<apex:form >
+<apex:pageBlock >
+<apex:pageBlockSection title="Rate Information">
+Are there proposed non-standard electronic rates—<br/>
+<apex:commandButton onclick="{!showSection1}" value="Yes" styleClass="btn" rerender="details"></apex:commandButton>
+<apex:commandButton onclick="{!showSection2}" value="No" styleClass="btn"></apex:commandButton>
+</apex:pageBlockSection>
+<apex:outputPanel id="details">
+<apex:pageBlockSection id="newData" title="Discount Rates" rendered="{!hideshow}">
+Enter Proposal range
+</apex:pageBlockSection>
+
+</apex:outputPanel>
+
+</apex:pageBlock>
+</apex:form>
+</apex:page>

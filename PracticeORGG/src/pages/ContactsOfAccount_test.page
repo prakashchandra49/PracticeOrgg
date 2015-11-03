@@ -1,0 +1,11 @@
+<apex:page standardController="Account" extensions="AccController">
+  <apex:form >
+    <apex:pageBlock title="Contacts">
+    <apex:pageBlockSection >
+    <apex:selectRadio value="{!selectedcontact}">
+    <apex:selectOptions value="{!contactnames}" />
+    </apex:selectRadio>
+     </apex:pageBlockSection>
+    </apex:pageBlock>
+</apex:form>
+</apex:page>

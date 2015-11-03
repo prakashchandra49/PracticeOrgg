@@ -1,0 +1,6 @@
+<apex:page controller="JsonController" contentType="application/json">
+Student Detail in JSON format: 
+<apex:outputText value="{!jsonArrayString}">
+</apex:outputText>
+
+</apex:page>

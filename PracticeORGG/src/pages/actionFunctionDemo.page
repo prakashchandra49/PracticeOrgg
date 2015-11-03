@@ -1,0 +1,20 @@
+<!-- Page: -->
+<apex:page controller="exampleCon">
+<apex:form >
+<!-- Define the JavaScript function sayHello-->
+<apex:actionFunction name="sayHello" action="{!sayHello}" rerender="out"
+status="myStatus"/>
+</apex:form>
+<apex:outputPanel id="out">
+<apex:outputText value="Hello "/>
+<apex:actionStatus startText="requesting..." id="myStatus">
+<apex:facet name="stop">{!Username}</apex:facet>
+</apex:actionStatus>
+</apex:outputPanel>
+<script>window.setTimeout(sayHello('fdgfg'),10000)</script>
+<apex:form >
+
+
+
+</apex:form>
+</apex:page>

@@ -1,0 +1,12 @@
+<apex:page standardController="Opportunity" extensions="OpportunityAmountClass" >
+    <apex:pageBlock >
+         <apex:pageBlockTable value="{!oppValues}" var="opp">
+             <apex:column value="{!opp.id}">
+                 <apex:facet name="header">Account Id</apex:facet>
+             </apex:column>
+             <apex:column value="{!opp.Amount}">
+                 <apex:facet name="header">Account Id</apex:facet>
+             </apex:column>
+         </apex:pageBlockTable>
+    </apex:pageBlock>
+</apex:page>

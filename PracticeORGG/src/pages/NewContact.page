@@ -1,0 +1,26 @@
+<apex:page standardController="Contact" extensions="con" >
+<apex:form >
+  <apex:pageblock >
+  <apex:pageBlockSection >
+ <apex:inputField value="{!Contact.FirstName}"/>
+  <apex:inputField value="{!Contact.LastName}"/>
+  <apex:inputField value="{!Contact.Email}"/>
+  <apex:inputField value="{!Contact.Phone}"/>
+  <apex:inputField value="{!Contact.Birthdate}"/>
+ <apex:inputField value="{!Contact.Experience__c}"/>
+  <apex:inputField value="{!Contact.Department}"/>
+  <apex:inputField value="{!Contact.Title}"/>
+  </apex:pageBlockSection>
+  <apex:pageBlockButtons >
+  <apex:commandButton value="save" action="{!save}" oncomplete="returnToPage()"/>
+  <apex:commandButton value="cancel" action="{!cancel}" oncomplete="returnToPage()"/>
+  </apex:pageBlockButtons>
+  </apex:pageblock>
+  </apex:form>
+  <script>
+  function returnToPage(){
+  parent.window.location='https://c.ap1.visual.force.com/apex/ContactPage';
+  window.sendRedirect(true);
+  }
+  </script>
+</apex:page>

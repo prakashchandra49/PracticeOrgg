@@ -1,0 +1,53 @@
+<apex:page standardController="Job_Application__c"
+recordSetVar="JobApps">
+<apex:form >
+<apex:pageblock id="thePageBlock">
+<apex:actionRegion >
+<apex:outputText value="Records per page: ">
+</apex:outputText>
+<apex:selectList value="{!pagesize}" size="1">
+<apex:selectOption itemLabel="10"
+itemValue="10"></apex:selectOption>
+<apex:selectOption itemLabel="15"
+itemValue="15"></apex:selectOption>
+<apex:selectOption itemLabel="20"
+itemValue="20"></apex:selectOption>
+<apex:selectOption itemLabel="20"
+itemValue="25"></apex:selectOption>
+<apex:actionSupport event="onchange"
+rerender="thePage, navigation"
+status="theStatus"/>
+</apex:selectList>
+<apex:outputLabel value="View: "
+for="viewList"></apex:outputLabel>
+<apex:selectList id="viewList" size="1"
+value="{!filterId}">
+<apex:actionSupport event="onchange"
+rerender="thePage, navigation"/>
+<apex:selectOptions value="{!listviewoptions}"/>
+</apex:selectList>
+<apex:actionStatus id="theStatus" startText="updating list..."
+stopText=" Total Result Size: {!resultSize}"/>
+</apex:actionRegion>
+<apex:pageblocktable value="{!JobApps}" var="JA"
+id="candidateTable">
+<apex:column value="{!JA.Name}"/>
+<apex:column value="{!JA.Candidate__c}"/>
+<apex:column value="{!JA.Candidate__r.First_Name__c}"/>
+
+<apex:column value="{!JA.Candidate__r.Last_Name__c}" />
+<apex:column value="{!JA.Position__c}"/>
+<apex:column value="{!JA.Position__r.Job_Description__c}">
+</apex:column>
+</apex:pageblocktable>
+</apex:pageblock>
+<apex:panelGrid columns="2" id="navigation">
+<apex:commandLink action="{!previous}"
+rendered="{!hasPrevious}">
+Previous</apex:commandLink>
+<apex:commandLink action="{!next}"
+rendered="{!hasNext}">
+Next</apex:commandLink>
+</apex:panelGrid>
+</apex:form>
+</apex:page>

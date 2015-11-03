@@ -1,0 +1,27 @@
+<!-- Question 1 :-  Create Page for Class and Student and override “New” and “Edit” -->
+<apex:page standardController="Student__c">
+<apex:form >
+<apex:pageBlock title="New Student: {!Student__c.FirstName__c}" >
+<apex:pageBlockSection title="claas Details" columns="1">
+ <apex:inputfield value="{!Student__c.FirstName__c}"/>
+  <apex:inputfield value="{!Student__c.LastName__c}"/>
+  <apex:inputfield value="{!Student__c.DOB__c}"/>
+  <apex:inputfield value="{!Student__c.Sex__c}"/>
+  <apex:inputfield value="{!Student__c.HaveVehicle__c}"/>
+  <apex:inputfield value="{!Student__c.EmailID__c}"/>
+  <apex:inputfield value="{!Student__c.Married__c}"/>
+  <apex:inputfield value="{!Student__c.WifeName__c}"/>
+  <apex:inputfield value="{!Student__c.Age__c}"/>
+  <apex:inputfield value="{!Student__c.ClassSt__c}"/>
+    
+ 
+</apex:pageBlockSection>
+ <apex:pageBlockButtons >
+    <apex:commandButton action="{!save}" value="Save" title="Save This Record"/>
+    <apex:commandButton action="{!cancel}" value="Cancel" title="Cancel This Record"/>
+   
+  </apex:pageBlockButtons>
+
+</apex:pageBlock>
+</apex:form>
+</apex:page>

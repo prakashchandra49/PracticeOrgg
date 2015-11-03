@@ -1,0 +1,40 @@
+<apex:page controller="MassEmailContactsController" tabStyle="Contact">
+<script>
+   function updateProjectId(isNow) {
+          document.getElementById('{!$Component.projSelFrm.isNow}').value = isNow;
+      }
+<apex:stylesheet value="{!$Resource.style}"/>
+</script>
+  <apex:form id="projSelFrm">
+  
+  <apex:inputHidden value="{!isNow}" id="isNow" />
+  <apex:sectionHeader title="Mass Email" subtitle="Confirmation"></apex:sectionHeader>
+  <div class="note">Step 3. Review and confirm     <h1 class="txtalign">Step 3 of 4</h1></div>
+    <apex:pageBlock title="Review and Confirm" mode="edit">
+     <apex:pageMessages ></apex:pageMessages>
+         
+       <br/><br/>
+       <apex:pageBlockSection title="Processing Options" columns="1">
+         <apex:inputCheckbox label="Store an activity for each message" value="{!isSaveAsActivity}"></apex:inputCheckbox>
+         <apex:inputCheckbox label="Use my signature" value="{!isUseSignature}"></apex:inputCheckbox>
+          <apex:inputCheckbox label="BCC me on one message" value="{!isBCCme}"></apex:inputCheckbox>
+         <apex:inputText value="{!massEmailName}" Label="Mass Email Name"/>      
+       </apex:pageBlockSection>
+       <apex:pageBlockSection title="Delivery Options" columns="1">
+     <!--   <input type="radio" name="delivery" value="{!isNow}" checked="checked">Now <apex:param name="isNow" value="isNow" assignTo="{!isNow}"/> </input><br/> -->
+        <apex:pageBlockSectionItem >
+        <input type="radio"  name="justADummyForVF" onclick="updateProjectId('isNow')" value="isNow" >Send Now</input><br /><br />
+        </apex:pageBlockSectionItem>
+        <input type="radio" name="justADummyForVF"><apex:inputText value="{!scheduleDate}" label="Schedule for delivery on"/>
+        <apex:outputLabel value="yy/mm/dd"></apex:outputLabel> 
+        <apex:inputField value="{!ScheduleDateTime.EndDateTime}"/>
+        </input>
+       </apex:pageBlockSection>
+        <apex:pageBlockButtons style="float:right">
+        <apex:commandButton value="Previous" action="{!EmailTemplates}" ></apex:commandButton>
+        <apex:commandButton value="Send" action="{!SendMassEmail}" ></apex:commandButton>
+        <apex:commandLink value="Cancel" action="{!Cancel}"> </apex:commandLink>
+      </apex:pageBlockButtons>
+    </apex:pageBlock>
+  </apex:form>
+</apex:page>

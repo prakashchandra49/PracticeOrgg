@@ -1,0 +1,149 @@
+<apex:page controller="ConExtension" >
+
+<apex:sectionHeader title="Contact"/>
+<apex:form id="formId">
+  <apex:actionFunction name="addtoCam" action="{!AddToCampaign}"/>
+  <apex:actionFunction name="viewRecord" action="{!viewRecord}"/>
+  <apex:selectList value="{!selectedView}" onchange="viewRecord()" size="1">
+  <apex:selectOptions value="{!views}"></apex:selectOptions>
+  </apex:selectList>
+
+  <apex:actionFunction name="fun4" action="{!addAllToMap}" reRender="pageBlockSection,tableid"/>
+  <apex:actionFunction name="fun5" action="{!clearMap}" reRender="pageBlockSection"/>
+      
+   <apex:pageBlock id="pageBlock">
+      <apex:actionfunction name="fun2" action="{!addToMap}"  reRender="tableid,pageBlockSection">
+        <apex:param name="selectedContactId" value=""/>
+      </apex:actionfunction>
+     <apex:commandButton value="Add Contact" action="{!AddContact}"/>
+     <apex:commandButton value="Add To Campaign"  id="button"  onclick="fun()" >
+       <apex:param name="size" value="{!sizeOfMap}"/>
+     </apex:commandButton>
+      <apex:actionFunction name="Del" action="{!DelContact}" reRender="pageBlock" />
+      <apex:repeat value="{!Albhabet}" var="alpha" id="theRepeat">&nbsp;&nbsp;
+        <apex:commandLink action="{!showContactAlphabet}" value="{!alpha}"  id="theValue" reRender="pageBlock">
+        <apex:param name="Alp" value="{!alpha}" assignTo="{!character}"/>     
+        </apex:commandLink>
+      </apex:repeat>
+   
+  
+  <apex:pageBlockTable var="contacts" value="{!ConWithFlag}" id="tableid" >
+  
+   <apex:column >
+   <apex:facet name="header">
+   <apex:inputCheckbox value="{!selectAll}" id="headerCheckBox" onclick="fun4()"/></apex:facet>
+   <apex:inputCheckbox value="{!contacts.flag}" onclick="fun2()"  id="checkboxes"/>
+   
+   
+   </apex:column>
+   
+   <apex:column >
+   <apex:facet name="header">
+    Action
+   </apex:facet>
+   <apex:commandLink value="Edit" action="{!EditContact}" >  
+   <apex:param name="editcontactId" value="{!contacts.cont.Id}" assignTo="{!EditId}"/>
+   </apex:commandLink>
+   <apex:commandLink value="Del" oncomplete="verify()" >
+   <apex:param name="delcontactId" value="{!contacts.cont.id}" assignTo="{!delId}"/>
+   </apex:commandLink>
+   </apex:column>
+  
+  
+  <apex:column value="{!contacts.cont.Name}">
+  <apex:facet name="header">
+  <apex:commandLink action="{!sortData}" reRender="pageBlock" value="Name">
+  <apex:variable var="imageVar" value="{!imageName}"/> 
+   <apex:image url="{!URLFOR($Resource.Arrows, imageVar)}" height="8" width="8" rendered="{!nameSorting}" />
+  <apex:param name="column" value="Name" assignTo="{!sortingElement}"/>
+  </apex:commandLink>
+  </apex:facet>
+  </apex:column>
+  
+  <apex:column value="{!contacts.cont.Title}">
+  <apex:facet name="header">
+  <apex:commandLink action="{!sortData}" reRender="pageBlock" value="Title">
+  <apex:param name="column" value="Title" assignTo="{!sortingElement}"/>
+   <apex:variable var="imageVar" value="{!imageName}"/> 
+  <apex:image url="{!URLFOR($Resource.Arrows, imageVar)}" height="8" width="8" rendered="{!titleSorting}" />
+  </apex:commandLink>
+  </apex:facet>
+  
+  </apex:column>
+  
+  <apex:column value="{!contacts.cont.Phone}">
+  <apex:facet name="header">
+  <apex:commandLink action="{!sortData}" reRender="pageBlock" value="Phone">
+  <apex:variable var="imageVar" value="{!imageName}"/> 
+  <apex:image url="{!URLFOR($Resource.Arrows, imageVar)}" height="8" width="8" rendered="{!phoneSorting}" />
+   <apex:param name="column" value="Phone" assignTo="{!sortingElement}"/>
+  </apex:commandLink>
+  
+  </apex:facet>
+ 
+  </apex:column>
+  
+ <apex:column value="{!contacts.cont.Email}">
+  <apex:facet name="header">
+  <apex:commandLink action="{!sortData}" reRender="pageBlock" value="Email">
+   <apex:param name="column" value="Email" assignTo="{!sortingElement}"/>
+   <apex:variable var="imageVar" value="{!imageName}"/> 
+  
+   <apex:image url="{!URLFOR($Resource.Arrows, imageVar)}" height="8" width="8" rendered="{!emailSorting}" />
+   
+  </apex:commandLink>
+
+  </apex:facet>
+   
+  </apex:column>
+  
+  </apex:pageBlockTable>
+  <apex:pageBlockSection columns="8" id="pageBlockSection" showHeader="true">
+   
+   <apex:actionFunction name="PageSize" action="{!PageSizeFun}" />
+   
+  <apex:outputtext value="Displayed{!noOfdisplayedRecords}" id="dr"></apex:outPuttext>
+   
+   <apex:selectList value="{!selectedPage}" size="1"  onchange="PageSize()">
+  <apex:selectOptions value="{!noOfPage}" ></apex:selectOptions>
+  </apex:selectList>
+  <apex:outputtext value="{!sizeOfMap}" id="mapSize"> 
+    </apex:outputtext>
+  <apex:commandLink action="{!previous}" value="previous" rendered="{!hasPrevious}"  reRender="pageBlock"/>
+  <apex:commandLink action="{!next}" value="next"  rendered="{!hasNext}" reRender="pageBlock"/>
+  <apex:inputText label="PageNumber" value="{!pageNumber}" size="3"/>
+  <apex:commandLink value="Go" action="{!goToPage}" reRender="pageBlock"/>
+  </apex:pageblockSection>
+  </apex:pageBlock>
+  </apex:form>
+  
+ <script>
+ 
+ function verify(){
+ var r=confirm("Are you sure");
+ 
+if (r==true)
+  {
+  Del();
+  }
+else
+  {
+  
+  } 
+ }
+ function fun(){
+var c=document.getElementById('{!$Component.formId.pageBlock.pageBlockSection.mapSize}');
+var count=c.innerHTML;
+if(count!=0){
+
+addtoCam();
+alert('hello');
+}
+else{
+alert('select any record');
+}
+}
+
+  </script>
+  
+</apex:page>

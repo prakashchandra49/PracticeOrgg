@@ -1,0 +1,34 @@
+<apex:page sidebar="false" showHeader="false"  controller="AccountController">
+     
+    <apex:form >
+    <apex:pageBlock title="Select Account Details">
+        <apex:pageBlockSection >
+            <p>Select Country :</p>
+                <apex:selectList size="1" value="{!selectedCountry}">
+                    <apex:selectOptions value="{!countries}"></apex:selectOptions>
+                </apex:selectList>
+                 <p align='Left'>Enter BillingState:</p>
+                 <apex:selectList id="stateBilling" size="1" value="{!selectedState}">
+                     <apex:selectOptions value="{!states}"></apex:selectOptions>
+                 </apex:selectList>
+                  <p align='Left'>Enter BillingCity:</p>
+                     <apex:selectList id="cityBilling" size="1" value="{!selectedCity}">
+                 <apex:selectOptions value="{!cities}"></apex:selectOptions>
+         </apex:selectList>
+        </apex:pageBlockSection>
+        <apex:pageBlockButtons >
+            <apex:commandButton value="Search" action="{!search}" />
+        </apex:pageBlockButtons>
+    </apex:pageBlock>
+    </apex:form>
+  <apex:pageBlock title="Viewing Accounts Results">
+      <apex:form id="theForm">
+        <apex:pageBlockSection >
+          <apex:dataList var="count" value="{!accountPagination}" type="1">
+              {!count.name}
+          </apex:dataList>
+        </apex:pageBlockSection>
+       
+      </apex:form> 
+  </apex:pageBlock>
+</apex:page>

@@ -1,0 +1,9 @@
+<apex:page sidebar="false" showHeader="false" renderAs="pdf" standardController="Student__c">
+
+<apex:panelGrid columns="1" width="100%">
+<apex:outputText value="{!Student__c.Name}"></apex:outputText>
+<apex:outputText value="{!NOW()}"></apex:outputText>
+<apex:detail subject="{!Student__c.id}" relatedList="false"/>
+</apex:panelGrid>
+
+</apex:page>

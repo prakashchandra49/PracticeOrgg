@@ -1,0 +1,35 @@
+<apex:page standardController="Student__c">
+    <script src="/soap/ajax/11.0/connection.js"></script>
+    <script src="/soap/ajax/11.0/apex.js"></script>
+    <script type="text/javascript">
+       
+         function updateRecord()
+         {  
+            var student=new sforce.SObject("Student__c");
+            var stdname=document.getElementById("{!$Component.formId.pageBlockId.inputFieldId}").value;
+            student.name=stdname;
+            student.Id = "{!$CurrentPage.parameters.id}";
+            sforce.connection.sessionId = '{!$Api.Session_ID}';
+            alert(student);
+            var result=sforce.connection.update([student]);
+            if (result[0].getBoolean("success"))
+            {
+                alert("Student record with id " + result[0].id + " has been updated");
+                parent.window.close();
+                parent.window.opener.location.href = "/{!$Request.id}";
+           }
+                else
+                alert("failed to update student " + result[0]);
+       }
+ </script>
+    
+
+   <apex:form onsubmit="updateRecord();" id="formId">
+     <apex:pageBlock id="pageBlockId">
+         Name: <apex:inputField value="{!Student__c.Name}" id="inputFieldId"></apex:inputField>
+      <apex:commandButton value="Save"/>
+    </apex:pageBlock>
+   
+   </apex:form>
+   
+</apex:page>

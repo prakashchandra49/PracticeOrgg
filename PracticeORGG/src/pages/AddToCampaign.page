@@ -1,0 +1,26 @@
+<apex:page standardController="CampaignMember"  extensions="ConExtension">
+ 
+<apex:form id="formId" >
+
+
+
+
+<apex:pageBlock id="pageBlock">
+
+  <apex:pageBlockSection id="pageBlockSection">
+  <apex:inputField value="{!CampaignMember.CampaignId}" id="input">
+      
+  </apex:inputField>
+  <apex:selectList value="{!CampaignMember.Status}" size="1" required="true">
+  <apex:selectOptions value="{!option}" ></apex:selectOptions>
+  </apex:selectList>
+
+  </apex:pageBlockSection>
+ 
+  <apex:commandButton value="Add To Campaign" action="{!add}" />
+  <apex:commandButton value="Cancel" action="{!cancel}"/>
+  </apex:pageBlock>
+  </apex:form>
+  
+  
+</apex:page>

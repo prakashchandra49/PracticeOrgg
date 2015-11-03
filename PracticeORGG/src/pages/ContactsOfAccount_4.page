@@ -1,0 +1,17 @@
+<apex:page standardController="Opportunity" Extensions="Opportunity_4">
+<apex:form >
+<apex:pageBlock title="Contacts">
+<apex:pageBlockSection >
+<apex:selectRadio value="{!selectedcontact}">
+<apex:selectOptions value="{!contactnames}" />
+</apex:selectRadio>
+
+</apex:pageBlockSection>
+<apex:pageBlockButtons >
+    <apex:commandButton value="Save" action="{!updateopp}"/>
+     <apex:commandButton value="Clear" action="{!Clearopp}"/>
+     <apex:commandButton value="Return" action="{!returnToOpportunity}"/>
+</apex:pageBlockButtons>
+</apex:pageBlock>
+</apex:form>
+</apex:page>

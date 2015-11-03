@@ -1,0 +1,27 @@
+<apex:page standardController="Student__c" cache="true">
+<apex:form >
+<apex:pageBlock title="Edit Student: {!Student__c.FirstName__c}" >
+<apex:pageBlockSection title="claas Details" columns="1">
+ <apex:outputfield value="{!Student__c.FirstName__c}"/>
+  <apex:outputfield value="{!Student__c.LastName__c}"/>
+  <apex:outputfield value="{!Student__c.DOB__c}"/>
+  <apex:outputfield value="{!Student__c.Sex__c}"/>
+  <apex:outputfield value="{!Student__c.HaveVehicle__c}"/>
+  <apex:outputfield value="{!Student__c.EmailID__c}"/>
+  <apex:outputfield value="{!Student__c.Married__c}"/>
+  <apex:outputfield value="{!Student__c.WifeName__c}"/>
+  <apex:outputfield value="{!Student__c.Age__c}"/>
+  <apex:outputfield value="{!Student__c.ClassSt__c}"/>
+    
+ 
+</apex:pageBlockSection>
+<apex:inlineEditSupport event="ondblClick" showOnEdit="saveButton,cancelButton" hideOnEdit="editButton" />
+ <apex:pageBlockButtons >
+    <apex:commandButton action="{!edit}" value="Edit" title="Edit This Record"/>
+    <apex:commandButton action="{!delete}" value="Delete" title="Delete This Record"/>
+        <apex:commandButton action="{!cancel}" value="Cancel" title="Cancel This Record"/>
+   </apex:pageBlockButtons>
+
+</apex:pageBlock>
+</apex:form>
+</apex:page>

@@ -1,0 +1,216 @@
+<apex:page standardController="Contact" extensions="MyContactController" recordSetVar="Contacts" sidebar="True"  >
+	<apex:pagemessages id="msgId"/>
+    <apex:includeScript value="https://ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"/> 
+
+    <style type="text/css"> 
+    #panel,#flip
+    {
+        padding:5px;
+        text-align:left;
+        background-color:#FFFFCC;
+        border:solid 1px #3399FF;
+    }
+    #panel
+    {
+        padding:5px;
+        display:none;
+        text-align:left;
+    }
+    </style>
+
+    <script type="text/javascript">
+        var j$ = jQuery.noConflict();        
+         function checkUncheck(checkVal) {
+            if(checkVal) {
+                $('.check').prop('checked', true);
+            } else {
+                $('.check').prop('checked', false);
+            }
+        }   
+    </script>
+
+    <apex:form id="theForm">
+    	<apex:pageMessages id="errMsg"/>
+    <!-- <apex:outputLabel id="info" value="{!Info}" rendered="true"/> -->
+		<apex:actionFunction name="callThis" action="{!skipToPage}"  rerender="errMsg">
+			<apex:param name="pageNumber" id="pageNumber" value="" assignto="{!pageNumber}" />
+		</apex:actionFunction>
+		 
+        <apex:pageBlock id="pb1" title="Filter">
+            <apex:pageMessages ></apex:pageMessages>
+            <br/>
+            <apex:pageBlockButtons >
+                <apex:commandButton value="SearchButton" action="{!search}"/>
+                <apex:commandButton value="ClearButton" action="{!clear}"/>
+            </apex:pageBlockButtons>
+           <table>
+                <tr>
+                 <!--     <td><b><apex:outputLabel value="{!$Label.Visit_Status_Actual}"></apex:outputLabel></b></td>
+                    <td></td>
+                    <td>{!$Label.VisitStatus_Assigned}</td>
+                    <td><apex:inputCheckbox value="{!statusFilterAssigned}"/></td>
+                    <td></td>
+                    <td>{!$Label.VisitStatus_Incomplete}</td>
+                    <td><apex:inputCheckbox value="{!statusFilterIncomplete}"/></td>
+                    <td></td>
+                    <td>{!$Label.VisitStatus_Completed}</td>
+                    <td><apex:inputCheckbox value="{!statusFilterCompleted}"/></td>
+                    <td></td>
+                       -->
+                    <td><b><apex:outputLabel value="Search Filter"></apex:outputLabel></b></td>
+                    <td><apex:inputText value="{!searchFilter}" id="searchFilter"/></td>
+                </tr>
+            </table>
+          
+        </apex:pageBlock>
+
+      <!--   <div id="flip">{!$Label.Visit_Help_Title}</div>
+        <div id="panel">
+            <ul>
+                <li>{!$Label.Visit_Help_Body_1}</li>
+                <li>{!$Label.Visit_Help_Body_2}</li>
+                <li>{!$Label.Visit_Help_Body_3}</li>
+                <li>{!$Label.Visit_Help_Body_4}</li>
+                <li>{!$Label.Visit_Help_Body_5}</li>
+                <li>{!$Label.Visit_Help_Body_6}</li>
+                <li>{!$Label.Visit_Help_Body_7}</li>
+                <li>{!$Label.Visit_Help_Body_8}</li>
+            </ul>
+        </div>
+        
+         -->
+        <br/>
+
+        <apex:pageBlock id="blockResult" title="Contacts">
+        
+            <apex:pageMessages rendered="true" id="theMessage" />
+              <apex:pageBlockButtons >
+                <apex:commandButton action="{!save}" value="Save"/>
+            </apex:pageBlockButtons>
+            <apex:pageBlockTable value="{!visitWrapperListPaged}" var="visitWrapperItem" rules="rows" id="tableResult">
+            	
+          	    <apex:column id="headerFooterId1" >
+                        <apex:facet name="header">
+                            <apex:inputCheckBox id="selectAllAccountId"  styleClass="headerCheck" onClick="checkUncheck(this.checked);" />
+                        </apex:facet>
+                        <apex:inputCheckBox id="selectSingleAccountId" value="{!visitWrapperItem.checked}"  />
+                        <apex:inputhidden value="{!visitWrapperItem.con.Id}" id="selectsingleHidden"/>
+                 </apex:column> 
+            	
+               
+                
+                <apex:column >
+                    <apex:facet name="header">
+                        <apex:commandLink action="{!doSort}" reRender="blockResult">Name
+                            <apex:param name="sortField" value="Name" assignTo="{!sortField}"/> 
+                        </apex:commandLink> 
+                    </apex:facet>
+                    <apex:outputLink value="{!visitWrapperItem.con.Id}" target="_blank">
+                        <apex:outputText value="{!visitWrapperItem.con.Name}" />
+                    </apex:outputLink>
+                </apex:column>
+                
+                <apex:column >
+                    <apex:facet name="header">
+                        <apex:commandLink action="{!doSort}" reRender="blockResult">{!$ObjectType.Contact.Fields.FirstName.Label} 
+                            <apex:param name="sortField" value="FirstName" assignTo="{!sortField}"/> 
+                        </apex:commandLink>
+                    </apex:facet>
+                    <apex:outputField value="{!visitWrapperItem.Con.FirstName}" />
+                </apex:column>
+                
+               <apex:column >
+                    <apex:facet name="header">
+                        <apex:commandLink action="{!doSort}" reRender="blockResult">{!$ObjectType.Contact.Fields.LastName.Label} 
+                            <apex:param name="sortField" value="LastName" assignTo="{!sortField}"/> 
+                        </apex:commandLink>
+                    </apex:facet>
+                    <apex:outputField value="{!visitWrapperItem.Con.LastName}" />
+                </apex:column>
+                
+				
+                
+                <apex:facet name="footer">
+                    <apex:outputPanel layout="block">
+                        <!-- ========================================== -->
+                        <!-- PAGE X OF X IN X RESULTS -->
+                        <!-- ========================================== -->
+                        {!$Label.Paging_Page} {!IF(paginator.pageCount=0, 0, paginator.pageNumberDisplayFriendly)} {!$Label.Paging_Of} {!paginator.pageCount} {!$Label.Paging_In} {!paginator.recordCount} {!$Label.Paging_Results}
+                        &nbsp;&nbsp;
+
+                        <!-- ========================================== -->
+                        <!-- FIRST                                   -->
+                        <!-- ========================================== -->
+                        <apex:outputText value="{!$Label.Paging_First}" 
+                            rendered="{!NOT(paginator.hasPrevious)}"/>
+                        <apex:commandLink value="{!$Label.Paging_First}" 
+                            rendered="{!paginator.hasPrevious}"
+                            action="{!paginator.first}"/>
+                        &nbsp;&nbsp;
+
+                        <!-- ========================================== -->
+                        <!-- PREVIOUS                                   -->
+                        <!-- ========================================== -->
+                        <apex:outputText value="{!$Label.Paging_Previous}" 
+                            rendered="{!NOT(paginator.hasPrevious)}"/>
+                        <apex:commandLink value="{!$Label.Paging_Previous}" 
+                            rendered="{!paginator.hasPrevious}"
+                            action="{!paginator.previous}"/>
+                        &nbsp;&nbsp;
+            
+                        <!-- ========================================== -->
+                        <!-- PAGE SHORTCUTS                             -->
+                        <!-- ========================================== -->
+                        <apex:repeat value="{!paginator.previousSkipPageNumbers}" var="skipPageNumber">
+                            <apex:outputPanel >
+                                <apex:commandLink value="{!skipPageNumber+1}" action="{!skipToPage}">
+                                    
+                                </apex:commandLink>
+                            </apex:outputPanel>
+                            &nbsp;&nbsp;
+                        </apex:repeat>
+                        
+                        <apex:outputText style="text-decoration:none; font-weight:bold; background-color: #FFFF00" 
+                            value="{!paginator.pageNumber+1}"/>
+                        &nbsp;&nbsp;
+                        <apex:repeat value="{!paginator.nextSkipPageNumbers}" var="skipPageNumber">
+                                <apex:commandLink onClick="callThis('{!skipPageNumber}') ;" value="{!skipPageNumber+1}"></apex:commandLink>
+                            &nbsp;&nbsp;
+                        </apex:repeat>
+             
+                        <!-- ========================================== -->
+                        <!-- NEXT                                       -->
+                        <!-- ========================================== -->
+                        <apex:outputText value="{!$Label.Paging_Next}" 
+                            rendered="{!NOT(paginator.hasNext)}"/>
+                        <apex:commandLink value="{!$Label.Paging_Next}" 
+                            rendered="{!paginator.hasNext}"
+                            action="{!paginator.next}"/>
+                        &nbsp;&nbsp;
+            
+                        <!-- ========================================== -->
+                        <!-- LAST                                       -->
+                        <!-- ========================================== -->
+                        <apex:outputText value="{!$Label.Paging_Last}" 
+                            rendered="{!NOT(paginator.hasNext)}"/>
+                        <apex:commandLink value="{!$Label.Paging_Last}" 
+                            rendered="{!paginator.hasNext}"
+                            action="{!paginator.last}"/>
+                        &nbsp;&nbsp;
+                        
+                        <!-- ========================================== -->
+                        <!-- Page Size Options                          -->
+                        <!-- ========================================== -->
+                        <apex:selectList value="{!paginator.pageSize}" 
+                            size="1"
+                            onchange="javascript: skipToPageNone();">
+                            <apex:selectOptions value="{!paginator.pageSizeOptions}" />
+                        </apex:selectList>                              
+                    </apex:outputPanel>
+                </apex:facet>               
+                
+            </apex:pageBlockTable>
+            <apex:actionFunction name="skipToPageNone" action="{!skipToPage}"/>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

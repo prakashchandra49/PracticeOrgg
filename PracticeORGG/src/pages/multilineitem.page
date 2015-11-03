@@ -1,0 +1,45 @@
+<apex:page controller="productselectionController">
+
+<script>
+ function abcd(){
+   alert('dsfsdfsdf');
+   alert(document.getElementById('j_id0:j_id2:ThePageBlock:ThePageBlock').value);
+ }
+</script>
+<apex:form >
+<apex:pageBlock id="ThePageBlock">
+  <apex:outputPanel styleClass="panelclass">
+   
+      <table cellspacing="5">
+        <tr>
+         <td><apex:outputlabel >Product</apex:outputlabel></td>
+         <td><apex:outputlabel >Quantity</apex:outputlabel></td>
+         <td><apex:outputlabel >Sales Price</apex:outputlabel></td>
+         <td><apex:outputlabel >Date [ 2/7/2012 ]</apex:outputlabel></td>
+         <td><apex:outputlabel >Line Description</apex:outputlabel></td>
+         
+         </tr>
+        <tr>
+          <td colspan="5"><hr></hr></td>
+        </tr>
+        <apex:repeat value="{!selectedProducts}" var="aa"> 
+        <tr>
+          <td><apex:outputlabel >{!aa.Name}</apex:outputlabel></td>
+         <td> <apex:inputtext value="{!quantity}"/></td>
+         <td> <apex:inputtext value="{!aa.PricebookEntries[0].UnitPrice}"/></td>
+         <td> <apex:inputtext /></td>
+         <td> <apex:inputtext /></td>
+        </tr>
+        </apex:repeat>  
+      </table>
+   
+  </apex:outputPanel><br/>
+  <apex:pageblockButtons >
+    <apex:commandButton value="Save" action="{!saveToDatabase}"/>
+    <apex:commandButton value="Save & More"/>
+    <apex:commandButton value="Cancel"/>
+  </apex:pageblockButtons>  
+</apex:pageBlock>
+
+</apex:form>
+</apex:page>

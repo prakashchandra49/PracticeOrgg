@@ -1,0 +1,98 @@
+<apex:page standardController="Account" Extensions="ShoppingCartCon" recordSetVar="accs">
+
+ <apex:includeScript value="{!$Resource.JsShopingCartCon}"/>
+ <script type="text/javascript">
+  function aa(){
+         return confirm("Are You Sure.. Do You Want To Proceed");
+       }
+</script>
+   <apex:form >
+  
+     <apex:pageBlock helpTitle="Help" HelpUrl="http://www.google.com">
+    
+       <apex:pageblocksection title="Product" columns="1" >
+       
+           <apex:pageblocktable value="{!Product}" var="prd">
+              <apex:column value="{!prd.Name__c}" />
+              <apex:column value="{!prd.price__c}" />
+              <apex:column value="{!prd.Category__c}" />
+              <apex:column >
+                <apex:facet name="header">AddToYourCart</apex:facet>
+                <apex:commandButton value="Add" action="{!addToCart}" reRender="lineItem,ren">
+                <apex:param name="pid" value="{!prd.id}" assignTo="{!productID}"/>
+                </apex:commandButton>
+              </apex:column>
+                      
+        </apex:pageblocktable>
+       </apex:pageblocksection>
+  
+    <apex:outputPanel id="ren" style="display:{!IF(NOT(ISNULL(productLineItem)),'block','none')}">
+  
+      <apex:pageblocksection rendered="{!isRenderedd}" title="Product Line Item" columns="1">
+        <apex:pageBlockTable value="{!productLineItem}" var="item">
+          <apex:column value="{!item.product.Name__c}" ><apex:facet name="header">Product</apex:facet></apex:column>
+          <apex:column ><apex:outputLabel value="{!item.quantity}" />  <apex:facet name="header">Quantity</apex:facet> </apex:column>
+          <apex:column value="{!item.Total}" > 
+            <apex:facet name="header">Total</apex:facet>  
+          </apex:column>
+          <apex:column >
+            <apex:facet name="header">RemoveItem</apex:facet>
+            <apex:commandLink value="RemoveItem" action="{!removeFromCart}" reRender="lineItem,ren">
+             <apex:param name="pid" value="{!item.product.id}" assignTo="{!productID}"/>
+            </apex:commandLink>
+           </apex:column>
+               
+               
+        </apex:pageBlockTable>
+          <apex:commandButton value="Done" onclick="aa();" action="{!Proceed}" reRender="AccountSection"/>
+           
+       </apex:pageblocksection>
+    </apex:outputPanel>
+    <apex:outputPanel id="AccountSection">
+
+    <apex:pageBlockSection rendered="{!isDone}" title="Account" columns="1">
+       <apex:selectList value="{!account}" size="1" label="Select Account">
+            <apex:selectOptions value="{!Accounts}"/>
+        </apex:selectList>
+        <apex:commandButton value="Done" onclick="aa();" action="{!GenerateInvoice}" reRender="InvoiceSection"/>
+    </apex:pageBlockSection>
+    </apex:outputPanel>  
+    
+    <apex:outputPanel id="InvoiceSection">
+ 
+    <apex:pageBlockSection rendered="{!isGenereted}" title="Invoice" columns="1">
+     
+        <apex:pageBlockTable value="{!productLineItem}" var="item">
+          <apex:column value="{!item.product.Name__c}" ><apex:facet name="header">Product</apex:facet></apex:column>
+          <apex:column ><apex:outputLabel value="{!item.quantity}" /><apex:facet name="header">Quantity</apex:facet> </apex:column>
+          <apex:column value="{!item.Total}" > 
+            <apex:facet name="header">Total</apex:facet>  
+          </apex:column>
+          
+               
+               
+        </apex:pageBlockTable>
+        <table class = "list" cellspacing = "0" cellpadding = "0" border="0" style="padding:20px;">
+          <apex:repeat value="{!productLineItem}" var="item">
+          <tr  Class = "headerRow" >
+          <td>Product</td>
+          <td>Quantity</td>
+          <td>Total</td>
+          </tr>
+          <tr>
+            <td>{!item.product.Name__c}</td>
+            <td>{!item.quantity}</td>
+            <td>{!item.Total}</td>
+          </tr>
+          <tr>
+                <td>{!TotalPrice}</td>
+           </tr>
+          </apex:repeat>
+           
+        </table>
+     <apex:pageBlockSectionItem ></apex:pageBlockSectionItem>  
+    </apex:pageBlockSection>
+    </apex:outputPanel>        
+       </apex:pageBlock>
+      </apex:form>
+</apex:page>

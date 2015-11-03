@@ -1,0 +1,47 @@
+<apex:page controller="MassEmailContactsController" tabStyle="Contact">
+<script>
+ function selectId(id)
+  {
+    assignIDIntoController(id.toString());
+  }
+  <apex:stylesheet value="{!$Resource.style}"/>
+</script>
+  <apex:sectionHeader title="Mass Email" subtitle="Template Selection"></apex:sectionHeader>
+ <apex:form >
+ <div class="note">Step 2. Select an email template     <h1 class="txtalign">Step 2 of 4</h1></div>
+    <apex:pageBlock title="FilterSection">
+            <apex:outputLabel value="Template"></apex:outputLabel>
+            <apex:inputText value="{!TemplateName}" label="Template"/>
+            <apex:commandButton value="Filter" action="{!FilterTemp}" id="theButton" rerender="TemplatePageBlock"></apex:commandButton>
+        </apex:pageBlock>
+        
+        
+   <apex:pageBlock id="TemplatePageBlock">
+     <apex:pageMessages ></apex:pageMessages>
+     <br/><br/>
+     <apex:pageBlockTable value="{!EmailTemplates}" var="emailTmp">
+       
+       <apex:column >
+            <apex:facet name="header">Preview</apex:facet>
+          <apex:outputLink value="/{!emailTmp.Id}" target="_blank">Preview</apex:outputLink>
+          </apex:column>
+       <apex:column >
+        <input type="radio" name="EmailTemplate" onclick="selectId('{!emailTmp.id}')"/>
+        </apex:column>
+    
+       <apex:column value="{!emailTmp.Name}"/>
+       <apex:column value="{!emailTmp.TemplateType}"/>
+       <apex:column value="{!emailTmp.Description}"/>
+     </apex:pageBlockTable>
+     <apex:pageBlockButtons >
+       <apex:commandButton value="Previous" action="{!massEmailTmp}"/>
+       <apex:commandButton value="Next" action="{!ScheduleMassEmail}"/>
+       <apex:commandLink value="Cancel" action="{!Cancel}"> </apex:commandLink>
+     </apex:pageBlockButtons>
+     <apex:actionFunction name="assignIDIntoController" action="{!assignId}" reRender="block2">
+        <apex:param name="TmpId" value="" />
+      </apex:actionFunction>
+   </apex:pageBlock>
+   <apex:pageBlock id="block2" rendered="false"></apex:pageBlock>
+ </apex:form>
+</apex:page>

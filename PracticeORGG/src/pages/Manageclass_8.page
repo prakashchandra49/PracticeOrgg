@@ -1,0 +1,35 @@
+<apex:page standardController="class__c" recordSetVar="myclass" extensions="classcon">
+<apex:form >
+    <apex:pageBlock >
+        <apex:pageblockSection columns="4">
+            <apex:pageBlockTable value="{!myclass}" var="cls" columns="1">
+                <apex:column value="{!cls.name}" />
+                
+                <apex:column >
+                <apex:commandLink action="{!editClass}" reRender="Record" >Edit
+                <apex:param name="cid" value="{!cls.id}" assignTo="{!id1}"/>
+                </apex:commandLink>
+                </apex:column> 
+                <apex:column >
+                <apex:commandLink action="{!deleteClass}">Del
+                <apex:param name="cid" value="{!cls.id}" assignTo="{!id1}"/>
+                </apex:commandLink>
+                </apex:column>
+            </apex:pageBlockTable>
+        </apex:pageblockSection>
+        
+        
+        <apex:pageBlockSection id="Record"  >
+            <apex:inputField value="{!classes.name}"/>
+          
+            <apex:inputField value="{!classes.MaxSize__c}"/>
+            <apex:inputField value="{!classes.Fees__c}"/>
+             <apex:commandButton value="save" action="{!save}" />
+            <apex:commandButton value="Clear" action="{!clear}"/>
+            <apex:commandButton value="Cancel" action="{!cancel}"/>
+        </apex:pageBlockSection>
+           
+    </apex:pageBlock>
+</apex:form>
+
+</apex:page>
